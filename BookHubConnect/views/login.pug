@@ -1,0 +1,29 @@
+doctype html
+html(lang='en')
+    head
+        title User Login
+        link(rel='stylesheet', href='/assets/css/bootstrap.min.css')
+        script(src='/assets/js/jquery.min.js')
+        script(src='/assets/js/bootstrap.min.js')
+        style.
+            body {
+                width: 100%;
+                background: #f2f2f2;
+            }
+    body
+        div(class='container pt-4')
+            div(class='card')
+                div(class='card-body')
+                    h4(class='text-center') User Login
+                    form#loginForm(action='/user/login', method='POST')
+                        div(class='form-group')
+                            label(for='login-username') Username:
+                            input(type='text', id='login-username', class='form-control', required, name='username')
+                        div(class='form-group')
+                            label(for='login-password') Password:
+                            input(type='password', id='login-password', class='form-control', required, name='password')
+                        button(type='submit', class='btn btn-primary btn-block mb-2') Login
+                        span(style='color: darkred') #{msg}
+                        div(class='mt-2')
+                            a(href='/user/register', class='btn-link') Go to register
+

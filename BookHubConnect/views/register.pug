@@ -1,0 +1,48 @@
+doctype html
+html(lang='en')
+    head
+        title User Register
+        link(rel='stylesheet', href='/assets/css/bootstrap.min.css')
+        script(src='/assets/js/jquery.min.js')
+        script(src='/assets/js/bootstrap.min.js')
+        style.
+            body {
+                width: 100%;
+                background: #f2f2f2;
+            }
+    body
+        div(class='container pt-4')
+            div(class='card')
+                div(class='card-body')
+                    h4(class='text-center') User Register
+                    form#loginForm(action='/user/register', method='POST', onsubmit='return checkForm()')
+                        div(class='form-group')
+                            label(for='login-username') Username:
+                            input(type='text', id='login-username', class='form-control', required, name='username')
+                        div(class='form-group')
+                            label(for='login-nickname') Nickname:
+                            input(type='text', id='login-nickname', class='form-control', required, name='nickname')
+                        div(class='form-group')
+                            label(for='login-password') Password:
+                            input(type='password', id='login-password', class='form-control', required, name='password')
+                        div(class='form-group')
+                            label(for='login-password2') Confirm Password:
+                            input(type='password', id='login-password2', class='form-control', required, name='repassword')
+                        div(class='form-group')
+                            label(for='login-password2') Role:
+                            select(name='role', class='form-control', required)
+                                option(value='2') User
+                                option(value='1') Admin
+                        button(type='submit', class='btn btn-primary btn-block mb-2') Register
+                        span(style='color: darkred') #{msg}
+                        div(class='mt-2')
+                            a(href='/user/login', class='btn-link') Go to login
+
+
+    script.
+        function checkForm(){
+            if ($('#login-password2').val() !== $('#login-password').val()){
+                alert('Two passwords are inconsistent')
+                return false
+            }
+        }

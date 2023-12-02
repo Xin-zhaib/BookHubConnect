@@ -1,0 +1,27 @@
+extends layout
+block content
+    div(class='container pt-4')
+        div(class='card')
+            div(class='card-body')
+                h4(class='text-center') Add Book
+                form#loginForm(action='/book/add', method='POST')
+                    div(class='form-group')
+                        label Title:
+                        input(type='text', class='form-control', required, name='title')
+                    div(class='form-group')
+                        label Author:
+                        input(type='text', class='form-control', required, name='author')
+                    div(class='form-group')
+                        label Details:
+                        input(type='text', class='form-control', required, name='details')
+                    div(class='form-group')
+                        label ISBN:
+                        input(type='text', class='form-control', required, name='isbn')
+                    div(class='form-group')
+                        label Genre:
+                        select(class='form-control', required, name='genre')
+                            each item in genres
+                                option(value=item.id) #{item.name}
+                    button(type='submit', class='btn btn-primary btn-block mb-2') Save
+                    span(style='color: darkred') #{msg}
+

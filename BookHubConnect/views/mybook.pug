@@ -1,0 +1,73 @@
+extends layout
+
+block content
+    div.container(class='mt-4')
+        if books.length === 0
+            h2 There are no books, please add them first
+            a.btn.btn-primary(href='/book/add') Add Book
+        each item in books
+            div.card.mb-2
+                div.card-header.d-flex
+                    h4.card-title(style='flex: 1') Title: #{item.title}
+                    div
+                        a.btn.btn-primary(href=`/book/update/${item._id}`) Edit
+                        a.btn.btn-danger.ml-2(href=`/book/remove/${item._id}`, onclick='return confirm("Are you sure you want to delete it?")') Delete
+                div.card-body
+                    p Author: #{item.author}
+                    p Genre: #{item.genre[0].name}
+                    p Details: #{item.details}
+                    p Average Score: #{item.averageScore}
+                    if user != null
+                        button.btn.btn-primary.btn-block(data-toggle='modal', data-target='#addReviewModal', onclick=`reviewBook('${item._id}')`) Review
+                    button.btn.btn-primary.btn-block(onclick=`viewReview('${item._id}')`) View Review
+
+    .modal.fade#addReviewModal(tabindex='-1', role='dialog', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Add review
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    form(method='post', action='/review/add')
+                        input#book-id(type='hidden', name='bookId')
+                        .form-group
+                            label Score
+                            input#range-input.form-control(type='range', name='score', min='1', max='5', value='3', step='1')
+                            div Score:
+                                span#range-value 3
+                        .form-group
+                            label Content
+                            textarea.form-control(rows='3', name='content', required)
+                        button.btn.btn-primary(type='submit') Submit
+
+
+
+    .modal.fade#reviewListModal(tabindex='-1', role='dialog', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5.modal-title Review List
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    div#review-list
+
+
+
+    script.
+        const rangeInput = document.getElementById('range-input');
+        const rangeValue = document.getElementById('range-value');
+
+        rangeInput.addEventListener('input', function () {
+            rangeValue.textContent = rangeInput.value;
+        });
+
+        function reviewBook(bookId){
+            document.querySelector('#book-id').value = bookId
+        }
+
+        function viewReview(bookId){
+            $('#review-list').load('/review/list?bookId=' + bookId)
+            $("#reviewListModal").modal('show')
+        }

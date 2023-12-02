@@ -1,0 +1,35 @@
+style.
+    .comment {
+        margin-bottom: 20px;
+    }
+    .comment .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .comment-info {
+        margin-left: 60px;
+    }
+    .comment .comment-text {
+        margin: 3px 0;
+        font-weight: 400;
+    }
+    .comment .timestamp {
+        font-size: 0.8em;
+        color: #777;
+    }
+body
+    .container
+        each item in reviews
+            .comment
+                .d-flex.align-items-center
+                    img.avatar(src='/assets/image/avatar.png', alt='Avatar')
+                    h5(class='ml-2') #{item.user[0].username}
+                .comment-info.mt-2
+                    p.comment-text Score: #{item.score}
+                    p.comment-text Content: #{item.content}
+                    - const date = new Date(item.createTime)
+                    - const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
+                    span.timestamp #{formattedDate}
+
